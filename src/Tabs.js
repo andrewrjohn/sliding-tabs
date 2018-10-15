@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 
+import { TabProvider, TabConsumer } from './contexts/tab'
+
 const TabHeader = styled.table`
 margin-left: auto;
 margin-right: auto;
@@ -42,6 +44,7 @@ const TabContent = styled.div`
     transition: all 200ms ease-in-out;
 `
 
+
 export default class Tabs extends Component {
     constructor (props) {
         super(props)
@@ -63,6 +66,7 @@ export default class Tabs extends Component {
             width: document.getElementById(this.props.tabs[0]).getBoundingClientRect().width,
             height: document.getElementById(this.props.tabs[0]).getBoundingClientRect().height,
         })
+        
     }
 
     switchTab (tab, index) {
@@ -70,9 +74,24 @@ export default class Tabs extends Component {
     }
 
   render() {
+      const name = <TabConsumer>{context => context.name}</TabConsumer>
+      console.log(name)
 
     return (
         <div>
+             <TabConsumer>
+             { context => (
+                 <div>
+             <h1>{context.NAME}</h1>
+             <h1>{context.AGE}</h1>
+             <h1>{context.JOB}</h1>
+             <button onClick={() => context.UPDATE_AGE()}>
+
+             Change Context
+         </button>
+             </div>
+             )}
+         </TabConsumer>
       <TabHeader>
           <tbody>
 
@@ -100,6 +119,10 @@ export default class Tabs extends Component {
                     
              }
          </div>
+        
+
+         
+         
       </div>
     )
   }
